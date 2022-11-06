@@ -27,7 +27,11 @@ public class AuthorService {
 //        if(authorByName.isPresent()){
 //            throw new IllegalStateException("Author with name "+author.getAuthor()+ "exist!");
 //        }
-        authorRepository.save(author);
+        if(authorByName!=null){
+            throw new IllegalStateException("Author with name "+author.getAuthor()+ "exist!");
+        }else {
+            authorRepository.save(author);
+        }
     }
 
     public Author getAuthor(long id){
@@ -42,7 +46,11 @@ public class AuthorService {
 //            if(authorByName.isPresent()){
 //                throw new IllegalStateException("Author with name "+author.getAuthor()+ "exist!");
 //            }
-            author.setAuthor(authorName);
+            if(authorByName!=null){
+                throw new IllegalStateException("Author with name "+author.getAuthor()+ "exist!");
+            }else {
+                author.setAuthor(authorName);
+            }
         }
     }
 

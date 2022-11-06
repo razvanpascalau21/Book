@@ -12,7 +12,7 @@ import java.util.List;
 @Configuration
 public class BookConfig {
     @Bean
-    CommandLineRunner commandLineRunner(BookRepository bookRepository, AuthorRepository authorRepository, BookService bookService){
+    CommandLineRunner commandLineRunner10(BookRepository bookRepository, AuthorRepository authorRepository, BookService bookService){
         return args -> {
             Book book=new Book("Amintiri din copilarie",120,new HashSet<>());
             Book book2=new Book("Poezi",100,new HashSet<>());

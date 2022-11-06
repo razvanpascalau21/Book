@@ -27,19 +27,26 @@ public class RoleService {
     }
 
     public void addNewRole(Role role){
-        Optional<Role> byRole = roleRepository.findByRole(role.getRole());
-        if(byRole.isPresent()){
+        Role byRole = roleRepository.findByRole(role.getRole());
+//        if(byRole.isPresent()){
+//            throw new IllegalStateException("Role"+ role.getRole()+" is present");
+//        }
+        if(byRole!=null){
             throw new IllegalStateException("Role"+ role.getRole()+" is present");
+        }else {
+            roleRepository.save(role);
         }
-        roleRepository.save(role);
     }
 
     @Transactional
     public void update(Long id,String role){
         Role roleId = roleRepository.findById(id).orElseThrow(()->new IllegalStateException("role with "+id+" doesn't exist!"));
         if(role!=null&& role.length()>0&& !Objects.equals(roleId.getRole(),role)){
-            Optional<Role> findByRole = roleRepository.findByRole(role);
-            if(findByRole.isPresent()){
+            Role findByRole = roleRepository.findByRole(role);
+//            if(findByRole.isPresent()){
+//                throw new IllegalStateException("Role "+ role+" exist");
+//            }
+            if(findByRole!=null){
                 throw new IllegalStateException("Role "+ role+" exist");
             }
             roleId.setRole(role);

@@ -22,27 +22,33 @@ public class UserService {
     }
 
     public User saveUser(User user){
-        Optional<User> userByEmail = userRepository.findByEmail(user.getEmail());
-        if(userByEmail.isPresent()){
-            throw new IllegalStateException("Email taken!");
-        }
+        //User userByEmail = userRepository.findByEmail(user.getEmail());
+//        if(userByEmail.isPresent()){
+//            throw new IllegalStateException("Email taken!");
+//        }
         return userRepository.save(user);
     }
 
     public void addRoleToUser(User user, Role role){
-        Optional<User> usernameByEmail = userRepository.findByEmail(user.getEmail());
-        if(!usernameByEmail.isPresent()){
+        User usernameByEmail = userRepository.findByEmail(user.getEmail());
+//        if(!usernameByEmail.isPresent()){
+//            throw new IllegalStateException("Email doesn't exist!");
+//        }
+        if(usernameByEmail!=null){
             throw new IllegalStateException("Email doesn't exist!");
         }
-        Optional<Role> byRole = roleRepository.findByRole(role.getRole());
-        if(!byRole.isPresent()){
+        Role byRole = roleRepository.findByRole(role.getRole());
+//        if(!byRole.isPresent()){
+//            throw new IllegalStateException("Role doesn't exist");
+//        }
+        if(byRole!=null){
             throw new IllegalStateException("Role doesn't exist");
         }
         user.getRoles().add(role);
     }
 
     public User getUser(String email){
-        return userRepository.findByEmail(email).orElseThrow(()->new IllegalStateException("Email doesn't exist!"));
+        return userRepository.findByEmail(email);//orElseThrow(()->new IllegalStateException("Email doesn't exist!"));
     }
 
     public List<User> getUsers(){

@@ -13,15 +13,10 @@ import java.util.stream.Collectors;
 public class MyUserDetails implements UserDetails {
     private razvan.pascalau.book.user.User user;
 
-    public MyUserDetails(){
-    }
-
     public MyUserDetails(User user) {
         this.user = user;
     }
 
-    public MyUserDetails(Optional<User> user) {
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

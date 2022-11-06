@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import razvan.pascalau.book.user.User;
 import razvan.pascalau.book.user.UserRepository;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -19,8 +20,11 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByEmail(username);
-        user.orElseThrow(()->new UsernameNotFoundException("User"+ username+" not found!"));
+        User user = userRepository.findByEmail(username);
+       // user.orElseThrow(()->new UsernameNotFoundException("User"+ username+" not found!"));
+        if(Objects.isNull(user)){
+            throw new UsernameNotFoundException("User"+ username+" not found!");
+        }
         return new MyUserDetails(user);
     }
 }

@@ -27,11 +27,15 @@ public class BookService {
     }
 
     public void addNewBook(Book book){
-        Optional<Book> bookByName=bookRepository.findByBookName(book.getBookName());
-        if(bookByName.isPresent()){
+        Book bookByName=bookRepository.findByBookName(book.getBookName());
+//        if(bookByName.isPresent()){
+//            throw new IllegalStateException("Book with name "+book.getBookName()+ "exist!");
+//        }
+        if(bookByName!=null){
             throw new IllegalStateException("Book with name "+book.getBookName()+ "exist!");
+        }else {
+            bookRepository.save(book);
         }
-        bookRepository.save(book);
     }
 
     public Book getBook(long id){
@@ -47,11 +51,15 @@ public class BookService {
     public void updateBook(long id,String name,Integer pages){
         Book book=bookRepository.findById(id).orElseThrow(()->new IllegalStateException("book with id="+id+" doesn't exist!"));
         if(name!=null&&name.length()>0&& !Objects.equals(book.getBookName(),name)){
-            Optional<Book> bookByName=bookRepository.findByBookName(book.getBookName());
-            if(bookByName.isPresent()){
+            Book bookByName=bookRepository.findByBookName(book.getBookName());
+//            if(bookByName.isPresent()){
+//                throw new IllegalStateException("Book with name "+book.getBookName()+ "exist!");
+//            }
+            if(bookByName!=null) {
                 throw new IllegalStateException("Book with name "+book.getBookName()+ "exist!");
+            }else {
+                book.setBookName(name);
             }
-            book.setBookName(name);
         }
 
         if(pages>0&& !Objects.equals(book.getPages(),pages)){
@@ -71,8 +79,8 @@ public class BookService {
     }
 
     public void addAuthorToBook(Book bookName, Author authorName){
-        Optional<Book> book = bookRepository.findByBookName(bookName.getBookName());
+        Book book = bookRepository.findByBookName(bookName.getBookName());
         Author author = authorRepository.findByAuthor(authorName.getAuthor());
-        book.get().getAuthors().add(author);
+        book.getAuthors().add(author);
     }
 }
