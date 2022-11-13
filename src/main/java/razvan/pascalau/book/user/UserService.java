@@ -34,14 +34,14 @@ public class UserService {
 //        if(!usernameByEmail.isPresent()){
 //            throw new IllegalStateException("Email doesn't exist!");
 //        }
-        if(usernameByEmail!=null){
+        if(usernameByEmail==null){ // todo I feel that here you check wrong if it is != but you should check if it's(==) NULL and then throw exception
             throw new IllegalStateException("Email doesn't exist!");
         }
         Role byRole = roleRepository.findByRole(role.getRole());
 //        if(!byRole.isPresent()){
 //            throw new IllegalStateException("Role doesn't exist");
 //        }
-        if(byRole!=null){
+        if(byRole==null){ // todo same here
             throw new IllegalStateException("Role doesn't exist");
         }
         user.getRoles().add(role);

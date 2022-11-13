@@ -15,7 +15,7 @@ public class AuthorConfig {
         return args -> {
             Author author=new Author("Ion Creanga");
             Author author2=new Author("Mihai Eminescu");
-            authorRepository.saveAll(List.of(author,author2));
+            //authorRepository.saveAll(List.of(author,author2)); todo Nooo need to save this again because this is already saved when first you save the books due to @ManyToMany
         };
     }
 }
