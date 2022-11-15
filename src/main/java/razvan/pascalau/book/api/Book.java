@@ -24,7 +24,7 @@ public class Book {
     private String bookName;
     @Column(name = "pages",nullable = false)
     private int pages;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book_author",joinColumns =@JoinColumn(name = "book_id"),inverseJoinColumns =@JoinColumn(name = "author_id"))
     private Set<Author> authors = new HashSet<>();
 
