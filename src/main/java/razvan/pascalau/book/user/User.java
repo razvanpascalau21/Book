@@ -27,18 +27,28 @@ public class User {
     private String email;
     @Column(name = "password",nullable = false,columnDefinition = "TEXT")
     private String password;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role",joinColumns =@JoinColumn(name = "user_id"),inverseJoinColumns =@JoinColumn(name = "role_id"))
     private Set<Role> roles=new HashSet<>();
 
     public User(){
     }
 
+
+
     public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+    }
+
+    public User(String firstName, String lastName, String email, String password,Set<Role> roles) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.roles=roles;
     }
 
     public Long getId() {
@@ -83,6 +93,10 @@ public class User {
 
     public Set<Role> getRoles() {
         return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     @Override

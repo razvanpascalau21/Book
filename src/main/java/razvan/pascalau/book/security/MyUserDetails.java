@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 public class MyUserDetails implements UserDetails {
     private razvan.pascalau.book.user.User user;
 
+    public MyUserDetails(){}
+
     public MyUserDetails(User user) {
         this.user = user;
     }
@@ -30,7 +32,7 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getEmail();
+        return this.user.getEmail();
     }
 
     @Override

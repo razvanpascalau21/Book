@@ -11,19 +11,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private final UserDetailsService userDetailsService;
-    private final PasswordEncoder passwordEncoder;
 
-    public SecurityConfig(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
-        this.userDetailsService = userDetailsService;
-        this.passwordEncoder = passwordEncoder;
-    }
 
 
     @Override
@@ -33,10 +27,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET,"/api/v1/book/**").hasAnyRole("ROLE_ADMIN","ROLE_USER")
-                .antMatchers(HttpMethod.POST,"/api/v1/book/**").hasAnyRole("ROLE_ADMIN")
-                .antMatchers(HttpMethod.DELETE,"/api/v1/book/**").hasAnyRole("ROLE_ADMIN")
-                .antMatchers(HttpMethod.PUT,"/api/v1/book/**").hasAnyRole("ROLE_ADMIN")
+                //.antMatchers(HttpMethod.GET,"/api/v1/book/**").hasAnyRole("ROLE_ADMIN","ROLE_USER")
+                //.antMatchers(HttpMethod.POST,"/api/v1/book/**").hasAnyRole("ROLE_ADMIN")
+                //.antMatchers(HttpMethod.DELETE,"/api/v1/book/**").hasAnyRole("ROLE_ADMIN")
+                //.antMatchers(HttpMethod.PUT,"/api/v1/book/**").hasAnyRole("ROLE_ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -47,7 +41,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+        auth.userDetailsService(myUserDetailsService()).passwordEncoder(passwordEncoder());
+    }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public MyUserDetailsService myUserDetailsService(){
+        return new MyUserDetailsService();
     }
 
 }

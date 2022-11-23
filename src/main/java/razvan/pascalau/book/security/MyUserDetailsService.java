@@ -12,15 +12,16 @@ import razvan.pascalau.book.user.UserRepository;
 import java.util.Objects;
 import java.util.Optional;
 
-@Service
+
 public class MyUserDetailsService implements UserDetailsService {
+    @Autowired
     private UserRepository userRepository;
 
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(username);
+        final User user = userRepository.findByEmail(username);
        // user.orElseThrow(()->new UsernameNotFoundException("User"+ username+" not found!"));
         if(Objects.isNull(user)){
             throw new UsernameNotFoundException("User"+ username+" not found!");
