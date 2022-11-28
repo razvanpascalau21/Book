@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class BookService {
@@ -51,12 +52,13 @@ public class BookService {
     public void updateBook(long id,String name,Integer pages){
         Book book=bookRepository.findById(id).orElseThrow(()->new IllegalStateException("book with id="+id+" doesn't exist!"));
         if(name!=null&&name.length()>0&& !Objects.equals(book.getBookName(),name)){
-            Book bookByName=bookRepository.findByBookName(book.getBookName());
+            Book bookByName=bookRepository.findByBookName(book.getBookName());//name
 //            if(bookByName.isPresent()){
 //                throw new IllegalStateException("Book with name "+book.getBookName()+ "exist!");
 //            }
-            if(bookByName!=null) {
-                throw new IllegalStateException("Book with name "+book.getBookName()+ "exist!");
+            if(bookByName==null) {//name
+                throw new IllegalStateException("Book with name "+book.getBookName()+ " exist!");
+                // throw new ConstraintViolationException();
             }else {
                 book.setBookName(name);
             }
@@ -81,6 +83,7 @@ public class BookService {
     public void addAuthorToBook(Book bookName, Author authorName){
         Book book = bookRepository.findByBookName(bookName.getBookName());
         Author author = authorRepository.findByAuthor(authorName.getAuthor());
-        book.getAuthors().add(author);
+        book.setAuthors(Set.of(author));
+        bookRepository.save(book);
     }
 }

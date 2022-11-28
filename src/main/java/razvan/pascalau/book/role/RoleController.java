@@ -8,7 +8,7 @@ import razvan.pascalau.book.api.Book;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/role")
+@RequestMapping(path = "api/v1/role")
 public class RoleController {
     private RoleService roleService;
 

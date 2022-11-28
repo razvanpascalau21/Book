@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("api/user")
+@RequestMapping("api/v1/user")
 public class UserController {
     private UserService userService;
     private RoleToUserForm roleToUserForm;

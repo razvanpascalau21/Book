@@ -46,7 +46,7 @@ public class AuthorService {
 //            if(authorByName.isPresent()){
 //                throw new IllegalStateException("Author with name "+author.getAuthor()+ "exist!");
 //            }
-            if(authorByName!=null){
+            if(authorByName==null){
                 throw new IllegalStateException("Author with name "+author.getAuthor()+ "exist!");
             }else {
                 author.setAuthor(authorName);

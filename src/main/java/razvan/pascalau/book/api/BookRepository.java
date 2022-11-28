@@ -14,4 +14,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
       + "left join fetch b.authors "
       + "where b.bookName = :name")
   Book findByBookName(@Param("name") String name);
+
+
 }

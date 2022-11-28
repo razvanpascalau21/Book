@@ -22,8 +22,8 @@ public class UserConfig {
         return args -> {
             User user=new User("Ion","Ion","ion@yahoo.com",encoder.encode("password"),new HashSet<>());
             User user2=new User("Iona","Ioana","iona@yahoo.com",encoder.encode("password"),new HashSet<>());
-            Role role=new Role("ADMIN");
-            Role role2=new Role("USER");
+            Role role=new Role("ROLE_ADMIN");
+            Role role2=new Role("ROLE_USER");
             user.setRoles(Set.of(role));
             user2.setRoles(Set.of(role2));
             userRepository.saveAll(List.of(user,user2));
